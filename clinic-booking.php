@@ -13,7 +13,7 @@ define('CB_VERSION', '1.0.0');
 define('CB_DIR', plugin_dir_path(__FILE__));
 define('CB_URL', plugin_dir_url(__FILE__));
 
-foreach (['i18n', 'settings'] as $f) {
+foreach (['i18n', 'settings', 'db'] as $f) {
     require_once CB_DIR . "includes/class-$f.php";
 }
 
@@ -23,5 +23,6 @@ register_deactivation_hook(__FILE__, function () {
 });
 
 add_action('plugins_loaded', function () {
+    CB_DB::maybe_upgrade();
     CB_I18n::init();
 });
