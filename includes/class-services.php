@@ -29,7 +29,7 @@ class CB_Services {
         return [
             'id' => (int)$s->id, 'name' => self::name($s, $lang), 'desc' => (string)self::desc($s, $lang),
             'duration' => (int)$s->duration, 'price' => CB_Settings::money($s->price),
-            'icon' => $s->icon, 'color' => $s->color,
+            'icon' => CB_Icons::key($s->icon), 'icon_svg' => CB_Icons::svg($s->icon, 26), 'color' => $s->color,
         ];
     }
 }

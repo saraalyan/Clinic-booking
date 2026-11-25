@@ -2,18 +2,18 @@
 /**
  * Plugin Name: Clinic Booking – حجز مواعيد العيادة
  * Description: صفحة عيادة + حجز مواعيد (أكثر من دكتور) + لوحة تحكم + شات بوت + إشعارات واتساب/إيميل + دفع بتحويل بنكي. عربي / עברית / English. سهل التخصيص من الإعدادات.
- * Version: 1.2.2
+ * Version: 1.3.0
  * Author: Clinic Booking
  * Text Domain: clinic-booking
  * Requires PHP: 7.4
  */
 if (!defined('ABSPATH')) exit;
 
-define('CB_VERSION', '1.2.2');
+define('CB_VERSION', '1.3.0');
 define('CB_DIR', plugin_dir_path(__FILE__));
 define('CB_URL', plugin_dir_url(__FILE__));
 
-foreach (['i18n', 'settings', 'db', 'services', 'doctors', 'availability', 'payments', 'booking', 'whatsapp', 'notify', 'verify', 'chatbot', 'rest', 'shortcodes'] as $f) {
+foreach (['i18n', 'settings', 'db', 'services', 'doctors', 'availability', 'payments', 'booking', 'whatsapp', 'icons', 'notify', 'verify', 'chatbot', 'rest', 'shortcodes'] as $f) {
     require_once CB_DIR . "includes/class-$f.php";
 }
 require_once CB_DIR . 'admin/class-admin.php';

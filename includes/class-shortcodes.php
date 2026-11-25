@@ -38,6 +38,7 @@ class CB_Shortcodes {
     /** Font choice (Settings → Appearance). Rubik covers Arabic, Hebrew and Latin in one family. */
     static function fonts() {
         return [
+            'hayyakum' => ['Hayyakum (خط العيادة – مدمج، بدون اتصال بجوجل)', '', '"Hayyakum"'],
             'plex' => ['IBM Plex Sans (عربي + עברית + English) – موصى به', 'IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans+Hebrew:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700', '"IBM Plex Sans Arabic","IBM Plex Sans Hebrew","IBM Plex Sans"'],
             'cairo' => ['Cairo (عربي + English، حديث وواضح)', 'Cairo:wght@400;500;600;700', '"Cairo"'],
             'almarai' => ['Almarai (عربي + English، هادئ للقراءة)', 'Almarai:wght@400;700', '"Almarai"'],
@@ -48,12 +49,12 @@ class CB_Shortcodes {
     }
 
     static function font_url() {
-        $f = self::fonts()[CB_Settings::get('font')] ?? self::fonts()['plex'];
+        $f = self::fonts()[CB_Settings::get('font')] ?? self::fonts()['hayyakum'];
         return $f[1] ? 'https://fonts.googleapis.com/css2?family=' . $f[1] . '&display=swap' : '';
     }
 
     static function font_family() {
-        $f = self::fonts()[CB_Settings::get('font')] ?? self::fonts()['plex'];
+        $f = self::fonts()[CB_Settings::get('font')] ?? self::fonts()['hayyakum'];
         return ($f[2] ? $f[2] . ',' : '') . '"Segoe UI",Tahoma,Arial,"Noto Sans Arabic","Noto Sans Hebrew",sans-serif';
     }
 
@@ -166,7 +167,7 @@ class CB_Shortcodes {
         $h = '<div class="cb-services">';
         foreach (CB_Services::all() as $s) {
             $price = CB_Settings::money($s->price);
-            $h .= '<div class="cb-svc" style="--c:' . esc_attr($s->color) . '"><span class="cb-ico">' . esc_html($s->icon ?: '🩺') . '</span><div><h3>' . esc_html(CB_Services::name($s, $lang)) . '</h3>';
+            $h .= '<div class="cb-svc" style="--c:' . esc_attr($s->color) . '"><span class="cb-ico">' . CB_Icons::svg($s->icon, 26) . '</span><div><h3>' . esc_html(CB_Services::name($s, $lang)) . '</h3>';
             $d = CB_Services::desc($s, $lang);
             if ($d) $h .= '<p>' . esc_html($d) . '</p>';
             $h .= '<small>' . (int)$s->duration . ' ' . esc_html(CB_I18n::t('b_min')) . ($price ? ' · ' . esc_html($price) : '') . '</small></div></div>';
@@ -195,13 +196,13 @@ class CB_Shortcodes {
         $S = 'CB_Settings';
         $h = '<div class="cb-contact">';
         $addr = $S::loc('address', $lang);
-        if ($addr) $h .= '<p><i class="ic">📍</i><span><small>' . esc_html(CB_I18n::t('p_address')) . '</small>' . esc_html($addr) . '</span></p>';
-        if ($S::get('phone')) $h .= '<p><i class="ic">📞</i><span><small>' . esc_html(CB_I18n::t('p_call')) . '</small><a dir="ltr" href="tel:' . esc_attr($S::get('phone')) . '">' . esc_html($S::get('phone')) . '</a></span></p>';
-        if ($S::get('email')) $h .= '<p><i class="ic">✉️</i><span><small>' . esc_html(CB_I18n::t('p_email')) . '</small><a href="mailto:' . esc_attr($S::get('email')) . '">' . esc_html($S::get('email')) . '</a></span></p>';
+        if ($addr) $h .= '<p><i class="ic">' . CB_Icons::svg('pin', 20) . '</i><span><small>' . esc_html(CB_I18n::t('p_address')) . '</small>' . esc_html($addr) . '</span></p>';
+        if ($S::get('phone')) $h .= '<p><i class="ic">' . CB_Icons::svg('phone', 20) . '</i><span><small>' . esc_html(CB_I18n::t('p_call')) . '</small><a dir="ltr" href="tel:' . esc_attr($S::get('phone')) . '">' . esc_html($S::get('phone')) . '</a></span></p>';
+        if ($S::get('email')) $h .= '<p><i class="ic">' . CB_Icons::svg('mail', 20) . '</i><span><small>' . esc_html(CB_I18n::t('p_email')) . '</small><a href="mailto:' . esc_attr($S::get('email')) . '">' . esc_html($S::get('email')) . '</a></span></p>';
         $btns = '';
         $wa = preg_replace('/\D+/', '', (string)$S::get('whatsapp'));
-        if ($wa) $btns .= '<a class="cb-btn cb-btn-wa" target="_blank" rel="noopener" href="https://wa.me/' . $wa . '">' . esc_html(CB_I18n::t('p_wa')) . '</a>';
-        if ($S::get('map_link')) $btns .= '<a class="cb-btn cb-btn-ghost" target="_blank" rel="noopener" href="' . esc_url($S::get('map_link')) . '">' . esc_html(CB_I18n::t('p_map')) . '</a>';
+        if ($wa) $btns .= '<a class="cb-btn cb-btn-wa" target="_blank" rel="noopener" href="https://wa.me/' . $wa . '">' . CB_Icons::svg('chat', 18) . '<span>' . esc_html(CB_I18n::t('p_wa')) . '</span></a>';
+        if ($S::get('map_link')) $btns .= '<a class="cb-btn cb-btn-ghost" target="_blank" rel="noopener" href="' . esc_url($S::get('map_link')) . '">' . CB_Icons::svg('map', 18) . '<span>' . esc_html(CB_I18n::t('p_map')) . '</span></a>';
         if ($btns) $h .= '<div class="cb-btns">' . $btns . '</div>';
         $soc = '';
         foreach (['facebook' => 'Facebook', 'instagram' => 'Instagram', 'x_url' => 'X'] as $k => $n) {
@@ -221,18 +222,23 @@ class CB_Shortcodes {
         self::remember_booking_url();
         $S = 'CB_Settings';
         $open = CB_Availability::is_open_now();
-        $logo = $S::get('logo') ? '<img class="cb-logo" src="' . esc_url($S::get('logo')) . '" alt="">' : '<span class="cb-logo-ph">♥</span>';
+        $logo = $S::get('logo') ? '<img class="cb-logo" src="' . esc_url($S::get('logo')) . '" alt="">' : '<span class="cb-logo-ph">' . CB_Icons::svg('stethoscope', 26) . '</span>';
         $hero_img = $S::get('hero_image') ? ' style="--hero:url(' . esc_url($S::get('hero_image')) . ')"' : '';
         $h = '<header class="cb-hero"' . $hero_img . '><div class="cb-hero-top"><div class="cb-brand">' . $logo . '<div><b>' . esc_html($S::loc('clinic_name', $lang)) . '</b><small>' . esc_html($S::loc('tagline', $lang)) . '</small></div></div>' . self::lang_switch() . '</div>';
         $h .= '<div class="cb-hero-body"><span class="cb-pill ' . ($open ? 'on' : '') . '">' . esc_html(CB_I18n::t($open ? 'p_open_now' : 'p_closed_now')) . '</span>';
         $h .= '<h1>' . esc_html($S::loc('welcome', $lang)) . '</h1><p>' . esc_html($S::loc('about', $lang)) . '</p>';
-        $h .= '<a class="cb-btn cb-btn-primary" href="#cb-booking">' . esc_html(CB_I18n::t('p_cta')) . '</a></div></header>';
+        $ph = trim((string)$S::get('phone'));
+        $h .= '<div class="cb-cta"><a class="cb-btn cb-btn-primary" href="#cb-booking">' . CB_Icons::svg('calendar', 20) . '<span>' . esc_html(CB_I18n::t('p_cta')) . '</span></a>';
+        if ($ph) $h .= '<a class="cb-btn cb-btn-ghost" dir="ltr" href="tel:' . esc_attr($ph) . '">' . CB_Icons::svg('phone', 18) . '<span>' . esc_html($ph) . '</span></a>';
+        $h .= '</div></div>';
+        if ($S::get('logo')) $h .= '<img class="cb-hero-art" src="' . esc_url($S::get('logo')) . '" alt="">';
+        $h .= '</header>';
         $h .= '<section class="cb-sec"><h2>' . esc_html(CB_I18n::t('p_services')) . '</h2>' . self::sc_services() . '</section>';
         if (count(CB_Doctors::all(true)) > 1) $h .= '<section class="cb-sec"><h2>' . esc_html(CB_I18n::t('a_doctors', $lang)) . '</h2>' . self::sc_doctors() . '</section>';
         $h .= '<section class="cb-sec" id="cb-book-sec"><h2>' . esc_html(CB_I18n::t('b_title')) . '</h2>' . self::sc_booking() . '</section>';
         $h .= '<section class="cb-sec cb-two"><div><h2>' . esc_html(CB_I18n::t('p_hours')) . '</h2>' . self::sc_hours() . '</div><div><h2>' . esc_html(CB_I18n::t('p_location')) . '</h2>' . self::sc_contact() . '</div></section>';
         if ($S::get('bot_enabled') && !$S::get('bot_floating')) $h .= self::sc_chatbot();
-        return self::wrap($h, 'cb-page');
+        return self::wrap($h, 'cb-page alignwide');
     }
 
     static function chatbot_html() {

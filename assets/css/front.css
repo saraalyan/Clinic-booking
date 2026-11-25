@@ -1,7 +1,7 @@
 /* Clinic Booking – front-end styles.
    Customize from Settings → Appearance (colors, font) or override the --cb-* variables in your theme. */
 .cb-root{
-  --p:var(--cb-primary,#1e6fd9);--a:var(--cb-accent,#0cc0a8);
+  --p:var(--cb-primary,#244860);--a:var(--cb-accent,#4f9a9b);
   --ink:#10243d;--mut:#64768d;--line:#e3ebf4;--bg:#f4f8fd;--card:#fff;
   --p-soft:color-mix(in srgb,var(--p) 9%,#fff);--p-mid:color-mix(in srgb,var(--p) 18%,#fff);
   --r:18px;--sh:0 1px 2px rgba(16,36,61,.04),0 8px 24px rgba(16,36,61,.06);--sh-lg:0 2px 4px rgba(16,36,61,.05),0 18px 48px rgba(16,36,61,.12);
@@ -224,3 +224,64 @@ input.cb-otp{text-align:center;letter-spacing:.5em;font-size:26px;font-weight:70
 .cb-part h4{margin:0 0 8px;font-size:14px;opacity:.75;font-weight:600}
 @media(max-width:420px){.cb-queue{grid-template-columns:1fr}}
 @media(max-width:420px){.cb-cal-grid .wd{font-size:10px;letter-spacing:0;white-space:nowrap;overflow:hidden}}
+
+/* ===== 1.3 brand refresh: Hayyakum font, logo colours, SVG icons, tidy buttons ===== */
+@font-face{font-family:"Hayyakum";src:url("../fonts/hayyakum-allah-regular.woff2") format("woff2"),url("../fonts/hayyakum-allah-regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+.cb-root{--ink:#1c3345;--mut:#5f7384;--line:#dde7ea;--bg:#f3f8f8;font-size:18px;font-synthesis:none}
+/* a single-weight font: hierarchy comes from size and colour, never from fake bold */
+.cb-root,.cb-root *{font-weight:400!important}
+.cb-root b,.cb-root strong,.cb-root h1,.cb-root h2,.cb-root h3,.cb-root h4{letter-spacing:0}
+.cb-root h1{font-size:clamp(34px,5.2vw,54px)!important;line-height:1.3}
+.cb-root h2{font-size:clamp(26px,3.4vw,34px)!important}
+.cb-root h3{font-size:21px}
+.cb-svg{display:block;flex:none}
+/* icons */
+.cb-ico{color:var(--c,var(--p));background:color-mix(in srgb,var(--c,var(--p)) 12%,#fff)}
+.cb-ico .cb-svg{width:26px;height:26px}
+.cb-contact .ic{color:var(--p)}.cb-contact .ic .cb-svg{width:20px;height:20px}
+.cb-logo-ph .cb-svg{width:26px;height:26px}
+/* buttons */
+.cb-btn{gap:10px;padding:13px 26px;font-size:17px;border-radius:14px;min-height:50px;line-height:1}
+.cb-btn .cb-svg{width:19px;height:19px}
+.cb-btn-primary{background:var(--p);box-shadow:0 8px 20px color-mix(in srgb,var(--p) 28%,transparent)}
+.cb-btn-wa{background:var(--a);box-shadow:0 8px 20px color-mix(in srgb,var(--a) 30%,transparent)}
+.cb-btn-ghost{border-color:color-mix(in srgb,var(--p) 25%,#fff);color:var(--p)!important}
+.cb-cta{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.cb-cta .cb-btn{flex:0 1 auto}
+.cb-btns{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0 6px}
+.cb-btns .cb-btn{width:100%}
+.cb-actions{display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.cb-actions .cb-btn-primary{margin-inline-start:auto;min-width:150px}
+.cb-actions .cb-btn-ghost{min-width:110px}
+/* hero + logo */
+.cb-hero{background:linear-gradient(160deg,#f2f9f9 0%,#e5f1f1 55%,#dbe9ee 100%)}
+.cb-logo{width:64px;height:64px;border-radius:0}
+.cb-brand b{font-size:24px!important}
+.cb-hero-art{display:none}
+/* service tiles + steps */
+.cb-svc{align-items:center}
+.cb-svc h3{font-size:20px}
+.cb-svc small,.cb-svc-opt small{font-size:15px}
+.cb-steps div{font-size:16px}
+.cb-slot{font-size:17px;padding:11px 4px}
+.cb-pill{font-size:15px}
+.cb-langs a{font-size:15px;padding:6px 16px}
+/* chat button */
+#cb-chat .cb-fab{display:grid;place-items:center;font-size:0;background:linear-gradient(135deg,var(--p),color-mix(in srgb,var(--p) 60%,var(--a)))}
+#cb-chat .cb-chat-t{display:inline-flex;align-items:center;gap:8px}#cb-chat .cb-chat-t i{display:grid;place-items:center}
+@media(max-width:560px){
+  .cb-btns{grid-template-columns:1fr}
+  .cb-cta .cb-btn{flex:1 1 100%}
+  .cb-actions .cb-btn{flex:1 1 40%}
+  .cb-root{font-size:17.5px}
+}
+/* hero art only when the hero itself is wide enough (theme containers can be narrow) */
+.cb-hero{container-type:inline-size}
+@container (min-width:860px){.cb-hero-art{display:block;position:absolute;bottom:24px;inset-inline-end:48px;width:330px;height:330px;object-fit:contain;filter:drop-shadow(0 16px 30px rgba(36,72,96,.18))}.cb-hero{min-height:480px}.cb-hero-body{max-width:520px}}
+.cb-btns:has(>:only-child){grid-template-columns:1fr}
+.cb-steps div span{white-space:nowrap}
+.cb-steps div{font-size:16px!important}
+@media(max-width:560px){.cb-steps div{font-size:0!important}.cb-steps div span{display:none}}
+.cb-slot.sel,.cb-slot.sel:hover{background:var(--p);border-color:var(--p);color:#fff}
+.cb-slots{grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:900px){.cb-slots{grid-template-columns:repeat(4,1fr)}}

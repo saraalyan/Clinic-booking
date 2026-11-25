@@ -7,6 +7,7 @@
     var e = document.createElement(tag);
     for (var k in (attrs || {})) {
       if (k === 'class') e.className = attrs[k];
+      else if (k === 'html') e.innerHTML = attrs[k]; // static inline SVG
       else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), attrs[k]);
       else if (attrs[k] != null) e.setAttribute(k, attrs[k]);
     }
@@ -24,11 +25,11 @@
   var msgs = el('div', { class: 'cb-msgs' });
   var input = el('input', { type: 'text', placeholder: S.c_placeholder, maxlength: '300' });
   var panel = el('div', { class: 'cb-panel' }, [
-    el('div', { class: 'cb-chat-head' }, [el('span', {}, '💬 ' + S.c_title), el('button', { type: 'button', 'aria-label': 'close', onclick: toggle }, '×')]),
+    el('div', { class: 'cb-chat-head' }, [el('span', { class: 'cb-chat-t' }, [el('i', { html: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>' }), ' ' + S.c_title]), el('button', { type: 'button', 'aria-label': 'close', onclick: toggle }, '×')]),
     msgs,
     el('form', { class: 'cb-chat-in', onsubmit: function (e) { e.preventDefault(); onSend(); } }, [input, el('button', { type: 'submit' }, S.c_send)])
   ]);
-  var fab = el('button', { class: 'cb-fab', type: 'button', 'aria-label': S.c_title, onclick: toggle }, '💬');
+  var fab = el('button', { class: 'cb-fab', type: 'button', 'aria-label': S.c_title, onclick: toggle, html: '<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>' });
   host.appendChild(panel); host.appendChild(fab);
 
   var started = false, flow = null;

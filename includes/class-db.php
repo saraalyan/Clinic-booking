@@ -11,8 +11,8 @@ class CB_DB {
         global $wpdb;
         if (!(int)$wpdb->get_var('SELECT COUNT(*) FROM ' . self::t('services'))) {
             $seed = [
-                ['استشارة عامة', 'ייעוץ כללי', '🩺', '#1e6fd9', 'General consultation'], ['متابعة علاج', 'מעקב טיפול', '💊', '#8b5cf6', 'Treatment follow-up'],
-                ['فحص الأطفال', 'בדיקת ילדים', '🧸', '#10b981', 'Pediatric check-up'], ['استشارة جلدية', 'ייעוץ עור', '✨', '#f59e0b', 'Dermatology consultation'],
+                ['استشارة عامة', 'ייעוץ כללי', 'stethoscope', '#244860', 'General consultation'], ['متابعة علاج', 'מעקב טיפול', 'pill', '#4f9a9b', 'Treatment follow-up'],
+                ['فحص الأطفال', 'בדיקת ילדים', 'baby', '#2f7f86', 'Pediatric check-up'], ['استشارة جلدية', 'ייעוץ עור', 'sparkles', '#5b7a99', 'Dermatology consultation'],
             ];
             foreach ($seed as $i => $s) {
                 $wpdb->insert(self::t('services'), ['name_ar' => $s[0], 'name_he' => $s[1], 'name_en' => $s[4] ?? '', 'duration' => 30, 'icon' => $s[2], 'color' => $s[3], 'active' => 1, 'sort' => $i]);

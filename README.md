@@ -27,6 +27,13 @@ A WordPress plugin for clinics: a professional clinic page, online appointment b
 
 الشرح الكامل والشورتكودات في [README-ar.md](README-ar.md).
 
+## الجديد في 1.3 / What's new
+
+- خط Hayyakum مدمج (بوزن واحد، بدون اتصال بجوجل) مرخّص OFL: `assets/fonts/`.
+- ألوان مأخوذة من الشعار، وشعار العيادة في الصفحة الرئيسية.
+- أيقونات SVG احترافية بدل الإيموجي (الخدمات، التواصل، الشات).
+- ترتيب أزرار الحجز والتواصل، وأوقات مقسّمة صباحًا / ظهرًا / مساءً بثلاثة أعمدة.
+
 ## متطلبات / Requirements
 
 WordPress 5.8+ · PHP 7.4+

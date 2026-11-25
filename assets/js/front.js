@@ -8,6 +8,7 @@
     var e = document.createElement(tag);
     for (var k in (attrs || {})) {
       if (k === 'class') e.className = attrs[k];
+      else if (k === 'html') e.innerHTML = attrs[k]; // trusted inline SVG produced by the plugin
       else if (k.slice(0, 2) === 'on') e.addEventListener(k.slice(2), attrs[k]);
       else if (attrs[k] !== false && attrs[k] != null) e.setAttribute(k, attrs[k]);
     }
@@ -44,7 +45,7 @@
   }
   function steps() {
     var f = flow(), cur = st.view === 'otp' ? 'details' : st.view, idx = f.map(function (x) { return x[0]; }).indexOf(cur);
-    return el('div', { class: 'cb-steps' }, f.map(function (x, i) { return el('div', { class: i === idx ? 'on' : (i < idx ? 'done' : '') }, (i + 1) + '. ' + x[1]); }));
+    return el('div', { class: 'cb-steps' }, f.map(function (x, i) { return el('div', { class: i === idx ? 'on' : (i < idx ? 'done' : '') }, el('span', {}, x[1])); }));
   }
   function mount(nodes) { root.innerHTML = ''; [].concat(nodes).forEach(function (n) { if (n === '' || n == null || n === false) return; root.appendChild(typeof n === 'string' ? document.createTextNode(n) : n); }); }
   function err() { return st.err ? el('div', { class: 'cb-err', role: 'alert' }, st.err) : ''; }
@@ -69,7 +70,7 @@
   function viewService() {
     var list = st.services.map(function (s) {
       return el('button', { type: 'button', class: 'cb-svc-opt' + (st.service && st.service.id === s.id ? ' sel' : ''), style: '--c:' + s.color, onclick: function () { pickService(s); } }, [
-        el('span', { class: 'cb-ico' }, s.icon || '🩺'),
+        el('span', { class: 'cb-ico', html: s.icon_svg || '' }),
         el('span', {}, [el('b', {}, s.name), el('small', {}, s.duration + ' ' + S.b_min + (s.price ? ' · ' + s.price : ''))])
       ]);
     });

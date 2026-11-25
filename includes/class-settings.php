@@ -18,7 +18,7 @@ class CB_Settings {
             'phone' => '+966501234567', 'whatsapp' => '966501234567', 'email' => 'info@example.com',
             'map_embed' => '', 'map_link' => '',
             'facebook' => '', 'instagram' => '', 'x_url' => '',
-            'logo' => '', 'hero_image' => '', 'primary' => '#1e6fd9', 'accent' => '#0cc0a8',
+            'logo' => defined('CB_URL') ? CB_URL . 'assets/img/logo.png' : '', 'hero_image' => '', 'primary' => '#244860', 'accent' => '#4f9a9b',
             'default_lang' => 'ar', 'currency' => '',
             'schedule' => $sched, 'break_from' => '', 'break_to' => '', 'holidays' => '',
             'slot_step' => 15, 'min_notice' => 2, 'max_days' => 60,
@@ -29,7 +29,7 @@ class CB_Settings {
             'verify_method' => 'none', 'max_active' => 3, 'wa_tpl_otp' => '', 'wa_otp_button' => 1,
             'email_enabled' => 1, 'email_reminders' => 1,
             'pay_mode' => 0, 'pay_hold' => 120, 'pay_info_ar' => '', 'pay_info_he' => '', 'pay_info_en' => '',
-            'bot_enabled' => 1, 'bot_floating' => 1, 'faq_ar' => '', 'faq_he' => '', 'faq_en' => '', 'font' => 'plex',
+            'bot_enabled' => 1, 'bot_floating' => 1, 'faq_ar' => '', 'faq_he' => '', 'faq_en' => '', 'font' => 'hayyakum',
         ];
     }
 
